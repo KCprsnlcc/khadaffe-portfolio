@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { FaGithub, FaEnvelope, FaLinkedin } from "react-icons/fa";
+import { FaGithub, FaEnvelope, FaLinkedin, FaDownload, FaLaptopCode, FaDatabase, FaChartBar, FaPhone, FaMapMarkerAlt, FaGraduationCap, FaAward } from "react-icons/fa";
 import AnimatedSVG from "./AnimatedSVG";
 import "./App.css";
 
@@ -15,8 +15,19 @@ const App = () => {
         transition={{ duration: 0.7 }}
       >
         <AnimatedSVG />
-        <h1>Khadaffe Sulaiman</h1>
-        <p className="subtitle">Developer | Data Analyst</p>
+        <h1>KHADAFFE A. SULAIMAN</h1>
+        <p className="subtitle">BS Information Technology Student | Web Developer</p>
+        
+        {/* Download CV Button */}
+        <motion.div 
+          className="cv-button-container"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <a href="/files/Khadaffe Sulaiman - Resume.pdf" download className="cv-button">
+            <FaDownload /> Download Resume
+          </a>
+        </motion.div>
       </motion.header>
 
       {/* About Me Section */}
@@ -27,9 +38,52 @@ const App = () => {
         transition={{ duration: 0.8 }}
       >
         <h2>About Me</h2>
-        <p>
-          I am a passionate IT professional with a keen interest in combining data analysis and software development to tackle complex challenges. I continuously strive to improve my technical skills while creating digital experiences that truly resonate.
-        </p>
+        <div className="content-box">
+          <div className="contact-brief">
+            <p><FaMapMarkerAlt /> Recodo, Zamboanga City</p>
+            <p><FaPhone /> 0932-863-9080</p>
+            <p><FaEnvelope /> kcpersonalacc@gmail.com</p>
+            <p><FaGithub /> github.com/KCprsnlcc</p>
+          </div>
+          <div className="objective">
+            <h3>Objective</h3>
+            <p>
+              I'm passionate about combining analysis and development to tackle complex challenges. My focus is on constantly improving both my technical skills and my approach to problem-solving. As I grow as a developer, I aim to create impactful digital experiences that people can truly connect with and benefit from.
+            </p>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* Education Section */}
+      <motion.section
+        className="section education"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.85 }}
+      >
+        <h2>Education</h2>
+        <div className="content-box">
+          <div className="education-item">
+            <h3><FaGraduationCap /> Tertiary</h3>
+            <p className="school">Pilar College of Zamboanga City Inc.</p>
+            <p className="degree">Bachelor of Science in Information and Technology (BSIT)</p>
+            <p className="timeline">S.Y 2021 - Present (Fourth Year Level)</p>
+          </div>
+          
+          <div className="education-item">
+            <h3><FaGraduationCap /> Secondary</h3>
+            <p className="school">Brent Hospital and Colleges, Inc.</p>
+            <p className="degree">Science, Technology, Engineering, and Mathematics (STEM)</p>
+            <p className="timeline">S.Y 2018 - 2020</p>
+          </div>
+          
+          <div className="education-item">
+            <h3><FaGraduationCap /> Primary</h3>
+            <p className="school">Recodo National High School</p>
+            <p className="degree">High School</p>
+            <p className="timeline">S.Y 2014 - 2018</p>
+          </div>
+        </div>
       </motion.section>
 
       {/* Skills Section */}
@@ -40,49 +94,110 @@ const App = () => {
         transition={{ duration: 0.9 }}
       >
         <h2>Skills</h2>
-        <ul>
-          <li>JavaScript, HTML, CSS</li>
-          <li>React.js</li>
-          <li>Python & Django</li>
-          <li>MySQL</li>
-          <li>Data Analysis</li>
-        </ul>
+        <div className="content-box">
+          <div className="skills-container">
+            <div className="skill-category">
+              <h3><FaLaptopCode /> IT Related Skills</h3>
+              <ul>
+                <li>JavaScript</li>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>MySQL</li>
+                <li>Python</li>
+                <li>Django</li>
+              </ul>
+            </div>
+            
+            <div className="skill-category">
+              <h3><FaChartBar /> Other Skills</h3>
+              <ul>
+                <li>Technical Writing</li>
+                <li>Project Management</li>
+                <li>Troubleshooting</li>
+                <li>Analytical Skills</li>
+                <li>Critical Thinking</li>
+                <li>Collaboration</li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </motion.section>
 
-      {/* Experience Section */}
+      {/* Achievements Section */}
       <motion.section
-        className="section experience"
+        className="section achievements"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        <h2>Experience</h2>
-        <p>
-          With a strong background in IT and hands-on project experience, I have been involved in various initiatives that bridge the gap between development and data analysis. My experiences have equipped me with a solid foundation in IT and problem-solving.
-        </p>
+        <h2>Achievements & Awards</h2>
+        <div className="content-box">
+          <ul className="achievement-list">
+            <li><FaAward /> Dean's Lister 2nd Year - 1st Semester</li>
+            <li><FaAward /> Dean's Lister 1st Year - 1st Semester</li>
+            <li><FaAward /> Consistent Top Student in Primary School</li>
+          </ul>
+        </div>
       </motion.section>
 
-      {/* Projects Section */}
+      {/* Seminars & Trainings Section */}
       <motion.section
-        className="section projects"
+        className="section seminars"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.1 }}
       >
-        <h2>Projects</h2>
-        <p>
-          I have worked on various projects available on my GitHub. Check out my portfolio for a glimpse into my work and contributions.
-        </p>
-        <p>
-          <FaGithub />{" "}
-          <a
-            href="https://github.com/KCprsnlcc"
-            target="_blank"
-            rel="noreferrer"
-          >
-            GitHub Profile
-          </a>
-        </p>
+        <h2>Seminars / Webinars / Trainings</h2>
+        <div className="content-box">
+          <div className="seminars-container">
+            <div className="recent-events">
+              <h3>Recent Events</h3>
+              <ul>
+                <li>Google I/O Extended Zamboanga Peninsula 2024</li>
+                <li>Google I/O Extended Zamboanga Peninsula 2023</li>
+                <li>DICT Webinar: Data Analytics in Python Training (06/24)</li>
+                <li>PCZC Seminar: Unlocking Code: Exploring the Foundations of Software Development (03/24)</li>
+                <li>PCZC Seminar: Empowering Dynamic User Interfaces: Unleashing the Power of ReactJS (01/24)</li>
+                <li>University of Immaculate Conception Webinar: Cyber Wellness (11/23)</li>
+                <li>DICT CERT-PH: HACK4GOV CYBER CHALLENGE 2023: Building Cyber Champions</li>
+              </ul>
+            </div>
+            
+            <div className="earlier-events">
+              <h3>Other Webinars & Trainings</h3>
+              <ul>
+                <li>DICT Webinar: Ethical Hacking: Understanding The Thin Line (02/23)</li>
+                <li>DICT Webinar: Internet Media & Information Literacy Training (02/23)</li>
+                <li>PCZC Seminar: Operating System Basics (01/23)</li>
+                <li>PCZC Seminar: Creating User Interface with Adobe XD (04/23)</li>
+                <li>PCZC Seminar: Atomic Design: Breaking of that Designer-to-Developer Gap Through System Design (04/23)</li>
+                <li>PCZC Webinar: Introduction to Web Development (04/22)</li>
+                <li>PCZC Webinar: Citing Sources in Academic Papers (04/22)</li>
+                <li>DICT Webinar: Digital Productivity (02/22)</li>
+                <li>PCZC Webinar: Introduction to PHP & MySQL (01/22)</li>
+                <li>PCZC Webinar: Blockchain Technology (01/22)</li>
+                <li>DICT Webinar: Digital Transformation Technologies Training (12/21)</li>
+                <li>PCZC Webinar on Infographics: A Learning and Marketing Tool for the Information Industry (11/21)</li>
+                <li>DICT Webinar: Ethical Hacking: Digital Education for Students (08/21)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* Extracurricular Activities Section */}
+      <motion.section
+        className="section activities"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.15 }}
+      >
+        <h2>Extracurricular Activities & Affiliations</h2>
+        <div className="content-box">
+          <p>
+            Pilar Colleges of Zamboanga City, Inc. participated in various team-building activities, including palaro, youth camps, and other related programs.
+          </p>
+        </div>
       </motion.section>
 
       {/* Contact Section */}
@@ -93,20 +208,40 @@ const App = () => {
         transition={{ duration: 1.2 }}
       >
         <h2>Contact</h2>
-        <p>
-          <FaEnvelope /> kcpersonalacc@gmail.com
-        </p>
-        <p>
-          <FaLinkedin />{" "}
-          <a
-            href="https://www.linkedin.com/in/your-profile"
-            target="_blank"
-            rel="noreferrer"
-          >
-            LinkedIn
-          </a>
-        </p>
+        <div className="content-box">
+          <div className="contact-details">
+            <p>
+              <FaEnvelope /> <a href="mailto:kcpersonalacc@gmail.com">kcpersonalacc@gmail.com</a>
+            </p>
+            <p>
+              <FaPhone /> <a href="tel:+639328639080">0932-863-9080</a>
+            </p>
+            <p>
+              <FaGithub />{" "}
+              <a
+                href="https://github.com/KCprsnlcc"
+                target="_blank"
+                rel="noreferrer"
+              >
+                GitHub Profile
+              </a>
+            </p>
+            <p>
+              <FaMapMarkerAlt /> Recodo, Zamboanga City
+            </p>
+          </div>
+        </div>
       </motion.section>
+      
+      {/* Footer */}
+      <motion.footer
+        className="footer"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.3 }}
+      >
+        <p>© 2023 Khadaffe Sulaiman. All rights reserved.</p>
+      </motion.footer>
     </div>
   );
 };
