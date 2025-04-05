@@ -1,12 +1,48 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { FaGithub, FaEnvelope, FaLinkedin, FaDownload, FaLaptopCode, FaDatabase, FaChartBar, FaPhone, FaMapMarkerAlt, FaGraduationCap, FaAward } from "react-icons/fa";
+import { FaGithub, FaEnvelope, FaLinkedin, FaDownload, FaLaptopCode, FaDatabase, FaChartBar, FaPhone, FaMapMarkerAlt, FaGraduationCap, FaAward, FaMoon, FaSun } from "react-icons/fa";
 import AnimatedSVG from "./AnimatedSVG";
 import "./App.css";
 
 const App = () => {
+  const [darkMode, setDarkMode] = useState(false);
+  
+  useEffect(() => {
+    // Check if user has a preference stored
+    const storedDarkMode = localStorage.getItem('darkMode');
+    if (storedDarkMode) {
+      setDarkMode(storedDarkMode === 'true');
+    } else {
+      // Check system preference
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setDarkMode(prefersDark);
+    }
+  }, []);
+  
+  useEffect(() => {
+    // Add or remove 'dark-mode' class to body when darkMode changes
+    document.body.classList.toggle('dark-mode', darkMode);
+    // Store preference
+    localStorage.setItem('darkMode', darkMode);
+  }, [darkMode]);
+  
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
   return (
-    <div className="container">
+    <div className={`container ${darkMode ? 'dark-mode' : 'light-mode'}`}>
+      {/* Theme Toggle Button */}
+      <motion.button
+        className="theme-toggle"
+        onClick={toggleDarkMode}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+      >
+        {darkMode ? <FaSun /> : <FaMoon />}
+      </motion.button>
+      
       {/* Header with Animated SVG */}
       <motion.header
         className="header"
