@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { FaGithub, FaEnvelope, FaLinkedin, FaDownload, FaLaptopCode, FaDatabase, FaChartBar, FaPhone, FaMapMarkerAlt, FaGraduationCap, FaAward, FaMoon, FaSun } from "react-icons/fa";
+import { FaGithub, FaEnvelope, FaLinkedin, FaDownload, FaLaptopCode, FaDatabase, FaChartBar, FaPhone, FaMapMarkerAlt, FaGraduationCap, FaAward, FaMoon, FaSun, FaCode, FaStar, FaCodeBranch, FaCertificate } from "react-icons/fa";
 import AnimatedSVG from "./AnimatedSVG";
 import "./App.css";
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(false);
+  const [repos, setRepos] = useState([]);
   
   useEffect(() => {
     // Check if user has a preference stored
@@ -17,6 +18,19 @@ const App = () => {
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       setDarkMode(prefersDark);
     }
+
+    // Fetch GitHub repositories
+    fetch('https://api.github.com/users/KCprsnlcc/repos')
+      .then(response => response.json())
+      .then(data => {
+        // Sort by stars and filter out forks
+        const sortedRepos = data
+          .filter(repo => !repo.fork)
+          .sort((a, b) => b.stargazers_count - a.stargazers_count)
+          .slice(0, 6); // Show top 6 repositories
+        setRepos(sortedRepos);
+      })
+      .catch(error => console.error('Error fetching GitHub repos:', error));
   }, []);
   
   useEffect(() => {
@@ -86,6 +100,43 @@ const App = () => {
             <p>
               I'm passionate about combining analysis and development to tackle complex challenges. My focus is on constantly improving both my technical skills and my approach to problem-solving. As I grow as a developer, I aim to create impactful digital experiences that people can truly connect with and benefit from.
             </p>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* GitHub Repositories Section */}
+      <motion.section
+        className="section github"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.9 }}
+      >
+        <h2>GitHub Projects</h2>
+        <div className="content-box">
+          <div className="repos-grid">
+            {repos.map((repo) => (
+              <motion.div
+                key={repo.id}
+                className="repo-card"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.2 }}
+              >
+                <h3><FaCode /> {repo.name}</h3>
+                <p className="repo-description">{repo.description || 'No description available'}</p>
+                <div className="repo-stats">
+                  <span><FaStar /> {repo.stargazers_count}</span>
+                  <span><FaCodeBranch /> {repo.forks_count}</span>
+                </div>
+                <a
+                  href={repo.html_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="repo-link"
+                >
+                  View on GitHub
+                </a>
+              </motion.div>
+            ))}
           </div>
         </div>
       </motion.section>
@@ -168,11 +219,56 @@ const App = () => {
       >
         <h2>Achievements & Awards</h2>
         <div className="content-box">
-          <ul className="achievement-list">
-            <li><FaAward /> Dean's Lister 2nd Year - 1st Semester</li>
-            <li><FaAward /> Dean's Lister 1st Year - 1st Semester</li>
-            <li><FaAward /> Consistent Top Student in Primary School</li>
-          </ul>
+          <div className="achievements-grid">
+            <div className="achievement-category">
+              <h3><FaAward /> Academic Achievements</h3>
+              <ul className="achievement-list">
+                <li>Dean's Lister 2nd Year - 1st Semester</li>
+                <li>Dean's Lister 1st Year - 1st Semester</li>
+                <li>Consistent Top Student in Primary School</li>
+              </ul>
+            </div>
+            <div className="achievement-category">
+              <h3><FaAward /> Technical Achievements</h3>
+              <ul className="achievement-list">
+                <li>Completed Google I/O Extended Zamboanga Peninsula 2024</li>
+                <li>Participated in DICT HACK4GOV CYBER CHALLENGE 2023</li>
+                <li>Successfully completed multiple technical training programs</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* Certificates Section */}
+      <motion.section
+        className="section certificates"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.1 }}
+      >
+        <h2>Certificates</h2>
+        <div className="content-box">
+          <div className="certificates-grid">
+            <div className="certificate-category">
+              <h3><FaCertificate /> Recent Certifications</h3>
+              <ul className="certificate-list">
+                <li>Google I/O Extended Zamboanga Peninsula 2024</li>
+                <li>DICT Webinar: Data Analytics in Python Training (06/24)</li>
+                <li>PCZC Seminar: Unlocking Code: Exploring the Foundations of Software Development (03/24)</li>
+                <li>PCZC Seminar: Empowering Dynamic User Interfaces: Unleashing the Power of ReactJS (01/24)</li>
+              </ul>
+            </div>
+            <div className="certificate-category">
+              <h3><FaCertificate /> Technical Certifications</h3>
+              <ul className="certificate-list">
+                <li>DICT Webinar: Ethical Hacking: Understanding The Thin Line (02/23)</li>
+                <li>DICT Webinar: Internet Media & Information Literacy Training (02/23)</li>
+                <li>PCZC Seminar: Operating System Basics (01/23)</li>
+                <li>PCZC Seminar: Creating User Interface with Adobe XD (04/23)</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </motion.section>
 
