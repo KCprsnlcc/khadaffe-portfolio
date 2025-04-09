@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { FaGithub, FaEnvelope, FaLinkedin, FaDownload, FaLaptopCode, FaDatabase, FaChartBar, FaPhone, FaMapMarkerAlt, FaGraduationCap, FaAward, FaMoon, FaSun, FaCode, FaStar, FaCodeBranch, FaCertificate } from "react-icons/fa";
+import { FaGithub, FaEnvelope, FaLinkedin, FaDownload, FaLaptopCode, FaDatabase, FaChartBar, FaPhone, FaMapMarkerAlt, FaGraduationCap, FaAward, FaMoon, FaSun, FaCode, FaStar, FaCodeBranch, FaCertificate, FaImage } from "react-icons/fa";
 import AnimatedSVG from "./AnimatedSVG";
 import "./App.css";
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [repos, setRepos] = useState([]);
+  const [contributions, setContributions] = useState([]);
+  const [selectedCertificate, setSelectedCertificate] = useState(null);
   
   useEffect(() => {
     // Check if user has a preference stored
@@ -31,6 +33,14 @@ const App = () => {
         setRepos(sortedRepos);
       })
       .catch(error => console.error('Error fetching GitHub repos:', error));
+
+    // Fetch GitHub contributions (mock data for now)
+    // In a real implementation, you would use the GitHub API or a service like GitHub Contributions API
+    const mockContributions = Array.from({ length: 365 }, (_, i) => ({
+      date: new Date(Date.now() - (364 - i) * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+      count: Math.floor(Math.random() * 5)
+    }));
+    setContributions(mockContributions);
   }, []);
   
   useEffect(() => {
@@ -42,6 +52,86 @@ const App = () => {
   
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
+  };
+
+  const openCertificateModal = (certificate) => {
+    setSelectedCertificate(certificate);
+  };
+
+  const closeCertificateModal = () => {
+    setSelectedCertificate(null);
+  };
+
+  // Certificate data with image paths
+  const certificates = [
+    {
+      id: 1,
+      title: "Google I/O Extended Zamboanga Peninsula 2024",
+      image: "/files/certificates/google-io-2024.jpg",
+      category: "Recent"
+    },
+    {
+      id: 2,
+      title: "DICT Webinar: Data Analytics in Python Training",
+      image: "/files/certificates/data-analytics-python.jpg",
+      category: "Recent"
+    },
+    {
+      id: 3,
+      title: "PCZC Seminar: Unlocking Code",
+      image: "/files/certificates/unlocking-code.jpg",
+      category: "Recent"
+    },
+    {
+      id: 4,
+      title: "PCZC Seminar: ReactJS",
+      image: "/files/certificates/reactjs.jpg",
+      category: "Recent"
+    },
+    {
+      id: 5,
+      title: "DICT Webinar: Ethical Hacking",
+      image: "/files/certificates/ethical-hacking.jpg",
+      category: "Technical"
+    },
+    {
+      id: 6,
+      title: "DICT Webinar: Internet Media & Information Literacy",
+      image: "/files/certificates/information-literacy.jpg",
+      category: "Technical"
+    },
+    {
+      id: 7,
+      title: "PCZC Seminar: Operating System Basics",
+      image: "/files/certificates/os-basics.jpg",
+      category: "Technical"
+    },
+    {
+      id: 8,
+      title: "PCZC Seminar: Adobe XD",
+      image: "/files/certificates/adobe-xd.jpg",
+      category: "Technical"
+    }
+  ];
+
+  // Skills data with proficiency levels
+  const skills = {
+    technical: [
+      { name: "JavaScript", level: 85 },
+      { name: "HTML", level: 90 },
+      { name: "CSS", level: 85 },
+      { name: "MySQL", level: 75 },
+      { name: "Python", level: 70 },
+      { name: "Django", level: 65 }
+    ],
+    other: [
+      { name: "Technical Writing", level: 80 },
+      { name: "Project Management", level: 75 },
+      { name: "Troubleshooting", level: 85 },
+      { name: "Analytical Skills", level: 80 },
+      { name: "Critical Thinking", level: 85 },
+      { name: "Collaboration", level: 90 }
+    ]
   };
 
   return (
@@ -138,6 +228,20 @@ const App = () => {
               </motion.div>
             ))}
           </div>
+          
+          {/* GitHub Contributions */}
+          <div className="github-contributions">
+            <h3>GitHub Contributions (Last Year)</h3>
+            <div className="contributions-grid">
+              {contributions.map((contribution, index) => (
+                <div 
+                  key={index} 
+                  className={`contribution-cell level-${contribution.count}`}
+                  title={`${contribution.count} contributions on ${contribution.date}`}
+                ></div>
+              ))}
+            </div>
+          </div>
         </div>
       </motion.section>
 
@@ -185,26 +289,46 @@ const App = () => {
           <div className="skills-container">
             <div className="skill-category">
               <h3><FaLaptopCode /> IT Related Skills</h3>
-              <ul>
-                <li>JavaScript</li>
-                <li>HTML</li>
-                <li>CSS</li>
-                <li>MySQL</li>
-                <li>Python</li>
-                <li>Django</li>
-              </ul>
+              <div className="skills-list">
+                {skills.technical.map((skill, index) => (
+                  <div key={index} className="skill-item">
+                    <div className="skill-header">
+                      <span className="skill-name">{skill.name}</span>
+                      <span className="skill-percentage">{skill.level}%</span>
+                    </div>
+                    <div className="skill-progress-container">
+                      <motion.div 
+                        className="skill-progress-bar"
+                        initial={{ width: 0 }}
+                        animate={{ width: `${skill.level}%` }}
+                        transition={{ duration: 1, delay: index * 0.1 }}
+                      ></motion.div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
             
             <div className="skill-category">
               <h3><FaChartBar /> Other Skills</h3>
-              <ul>
-                <li>Technical Writing</li>
-                <li>Project Management</li>
-                <li>Troubleshooting</li>
-                <li>Analytical Skills</li>
-                <li>Critical Thinking</li>
-                <li>Collaboration</li>
-              </ul>
+              <div className="skills-list">
+                {skills.other.map((skill, index) => (
+                  <div key={index} className="skill-item">
+                    <div className="skill-header">
+                      <span className="skill-name">{skill.name}</span>
+                      <span className="skill-percentage">{skill.level}%</span>
+                    </div>
+                    <div className="skill-progress-container">
+                      <motion.div 
+                        className="skill-progress-bar"
+                        initial={{ width: 0 }}
+                        animate={{ width: `${skill.level}%` }}
+                        transition={{ duration: 1, delay: index * 0.1 }}
+                      ></motion.div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -252,21 +376,63 @@ const App = () => {
           <div className="certificates-grid">
             <div className="certificate-category">
               <h3><FaCertificate /> Recent Certifications</h3>
-              <ul className="certificate-list">
-                <li>Google I/O Extended Zamboanga Peninsula 2024</li>
-                <li>DICT Webinar: Data Analytics in Python Training (06/24)</li>
-                <li>PCZC Seminar: Unlocking Code: Exploring the Foundations of Software Development (03/24)</li>
-                <li>PCZC Seminar: Empowering Dynamic User Interfaces: Unleashing the Power of ReactJS (01/24)</li>
-              </ul>
+              <div className="certificate-gallery">
+                {certificates
+                  .filter(cert => cert.category === "Recent")
+                  .map(cert => (
+                    <motion.div 
+                      key={cert.id} 
+                      className="certificate-item"
+                      whileHover={{ scale: 1.05 }}
+                      onClick={() => openCertificateModal(cert)}
+                    >
+                      <div className="certificate-image-container">
+                        <img 
+                          src={cert.image} 
+                          alt={cert.title} 
+                          className="certificate-thumbnail"
+                          onError={(e) => {
+                            e.target.src = "/files/certificates/placeholder.jpg";
+                          }}
+                        />
+                        <div className="certificate-overlay">
+                          <FaImage />
+                        </div>
+                      </div>
+                      <p className="certificate-title">{cert.title}</p>
+                    </motion.div>
+                  ))}
+              </div>
             </div>
             <div className="certificate-category">
               <h3><FaCertificate /> Technical Certifications</h3>
-              <ul className="certificate-list">
-                <li>DICT Webinar: Ethical Hacking: Understanding The Thin Line (02/23)</li>
-                <li>DICT Webinar: Internet Media & Information Literacy Training (02/23)</li>
-                <li>PCZC Seminar: Operating System Basics (01/23)</li>
-                <li>PCZC Seminar: Creating User Interface with Adobe XD (04/23)</li>
-              </ul>
+              <div className="certificate-gallery">
+                {certificates
+                  .filter(cert => cert.category === "Technical")
+                  .map(cert => (
+                    <motion.div 
+                      key={cert.id} 
+                      className="certificate-item"
+                      whileHover={{ scale: 1.05 }}
+                      onClick={() => openCertificateModal(cert)}
+                    >
+                      <div className="certificate-image-container">
+                        <img 
+                          src={cert.image} 
+                          alt={cert.title} 
+                          className="certificate-thumbnail"
+                          onError={(e) => {
+                            e.target.src = "/files/certificates/placeholder.jpg";
+                          }}
+                        />
+                        <div className="certificate-overlay">
+                          <FaImage />
+                        </div>
+                      </div>
+                      <p className="certificate-title">{cert.title}</p>
+                    </motion.div>
+                  ))}
+              </div>
             </div>
           </div>
         </div>
@@ -374,6 +540,38 @@ const App = () => {
       >
         <p>© 2023 Khadaffe Sulaiman. All rights reserved.</p>
       </motion.footer>
+
+      {/* Certificate Modal */}
+      {selectedCertificate && (
+        <motion.div 
+          className="modal-overlay"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={closeCertificateModal}
+        >
+          <motion.div 
+            className="modal-content"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            onClick={e => e.stopPropagation()}
+          >
+            <button className="modal-close" onClick={closeCertificateModal}>×</button>
+            <h3>{selectedCertificate.title}</h3>
+            <div className="modal-image-container">
+              <img 
+                src={selectedCertificate.image} 
+                alt={selectedCertificate.title} 
+                className="modal-image"
+                onError={(e) => {
+                  e.target.src = "/files/certificates/placeholder.jpg";
+                }}
+              />
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
     </div>
   );
 };
